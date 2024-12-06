@@ -1,18 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
-</head>
-<body>
-    <p> {{content}}</p>
-    {% if is_authenticated %}
-        <p> {{ list.0 }}</p>
-        <p> {{ dict.first }}</p>
-    {% endif %}
+{% extends "main/base.html" %}
+{% load static %}
+
+<title>{% block title %}Home{% endblock %}</title>
+{% block content %}
+<section>
+    <div>
+         <h1 class="main_title">
+            Make Your Dream Happen
+        </h1>
+    </div>
+ </section>     
+{% endblock content %}
+
+{% block footer %}
+<footer class="py-4 bg-dark w-100" style="position: absolute; bottom: 0;">
+  <div class="container">
+    <p class="m-0 text-center text-white">Motorcycle Shop &copy; Live Your Dream</p>
+  </div>
+</footer>
+{% endblock footer %}
+
+
+ 
     
-   
-    
-</body>
-</html>
+ 
+
+
+
+

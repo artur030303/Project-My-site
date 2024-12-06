@@ -2,19 +2,20 @@ from turtle import title
 from django.http import HttpResponse
 from django.shortcuts import render
 
-# Create your views here.
+
 def index(request):
-    context ={
-        'title': 'Home',
-        'content':'Главная страница магазина - HOME',
-        'list': ['first','second'],
-        'dict':{'first':1},
-        'is_authenticated': False
-    }
 
-
-    return render(request, 'main/index.html', context )
+    return render(request, "main/index.html")
 
 
 def about(request):
-    return HttpResponse("About page")
+    return render(request, "main/about_us.html")
+
+
+def catalog(request) -> HttpResponse:
+
+    return render(request, "main/catalog.html")
+
+
+def basket(request) -> HttpResponse:
+    return render(request, "main/basket.html")
