@@ -54,9 +54,24 @@
                 >
               </li>
              
-              <li class="nav-item">
-                <a class="nav-link" aria-disabled="true" href="{% url 'catalog' %}">Каталог</a>
+             <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Каталог
+                </a>
+                <ul class="dropdown-menu">
+                  {% for category in categories %}
+                  <li><a class="dropdown-item text-white" href="{% url 'catalog:index' %}">{{category.name}}</a></li>
+                  {% endfor %}
+                  
+                </ul>
               </li>
+              
               <li class="nav-item dropdown">
                 <a
                   class="nav-link dropdown-toggle"
@@ -68,18 +83,34 @@
                   Информация
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider" /></li>
+                  
                   <li>
-                    <a class="dropdown-item" href="{% url 'main:about_us' %}">О нас</a>
+                    <a class="dropdown-item text-white" href="{% url 'main:about_us' %}">О нас</a>
                   </li>
                 </ul>
               </li>
                <li class="nav-item">
-                            <a class="nav-link  text-white" href="{% url 'basket'%}">Корзина</a>
+                            <a class="nav-link  " href="{% url 'basket'%}">Корзина</a>
                         </li>
-                        
+                         <li class="nav-item">
+                            <a class="nav-link  " href="users/login.html">Войти</a>
+                        </li>
+                        <li class="nav-item dropdown ">
+                            <a class="nav-link dropdown-toggle " href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Мой профиль
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item  text-white" href="carts/cart.html">Корзина</a></li>
+                                <li><a class="dropdown-item  text-white" href="users/profile.html">Личный кабинет</a>
+                                </li>
+                                <li><a class="dropdown-item  text-white" href="{% url 'admin:index' %}">Админ панель</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item  text-white" href="#">Выйти</a></li>
+                            </ul>
+                        </li>          
             </ul>
              <!-- Значек корзины, вызывает модальное окно -->
             

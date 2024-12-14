@@ -23,6 +23,6 @@ from main import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("main.urls", namespace="main")),
-    path("catalog/", views.catalog, name="catalog"),
+    path("catalog/", include("goods.urls", namespace="catalog")),
     path("basket/", views.basket, name="basket"),
 ]
