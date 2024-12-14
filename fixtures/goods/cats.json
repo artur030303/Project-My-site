@@ -1,0 +1,30 @@
+[
+  {
+    "model": "goods.categories",
+    "pk": 5,
+    "fields": { "name": "Все товары", "slug": "all" }
+  },
+  {
+    "model": "goods.categories",
+    "pk": 6,
+    "fields": {
+      "name": "Туристический мотоцикл",
+      "slug": "turisticheskij-motocikl"
+    }
+  },
+  {
+    "model": "goods.categories",
+    "pk": 7,
+    "fields": { "name": "Чоппер", "slug": "chopper" }
+  },
+  {
+    "model": "goods.categories",
+    "pk": 8,
+    "fields": { "name": "Спортивный мотоцикл", "slug": "sportivnyj-motocikl" }
+  },
+  {
+    "model": "goods.categories",
+    "pk": 9,
+    "fields": { "name": "Скутер", "slug": "skuter" }
+  }
+]
