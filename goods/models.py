@@ -54,17 +54,9 @@ class Products(models.Model):
         null=True,
         verbose_name="Изображение Слайд-3",
     )
-    carousel_id = models.CharField(
-        max_length=50,
-        unique=True,
-        null=True,
-        blank=True,
-    )
-    price = models.DecimalField(
-        default=0.000, max_digits=8, decimal_places=3, verbose_name="Цена"
-    )
+    price = models.IntegerField(verbose_name="Цена")
     discount = models.DecimalField(
-        default=0.000, max_digits=4, decimal_places=3, verbose_name="Скидка в %"
+        default=0.000, max_digits=5, decimal_places=2, verbose_name="Скидка в %"
     )
     quantity = models.PositiveIntegerField(default=0, verbose_name="Количество")
     category = models.ForeignKey(
@@ -78,3 +70,11 @@ class Products(models.Model):
 
     def __str__(self):
         return f"{self.name} Количество - {self.quantity}"
+
+    def display_id(self):
+        return f"{self.id:05}"
+
+    def sell_price(self):
+        if self.discount:
+            return round(self.price - self.price * self.discount / 100)
+        return self.price

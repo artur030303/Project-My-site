@@ -1,21 +1,19 @@
-/**Открытие полного описания товара */
+/**полное описания товара */
 document.addEventListener("DOMContentLoaded", () => {
   const readMoreLinks = document.querySelectorAll(".read-more-link");
 
   readMoreLinks.forEach((link) => {
     link.addEventListener("click", (e) => {
-      e.preventDefault(); // Предотвращаем стандартное поведение ссылки
+      e.preventDefault();
 
-      // Ищем ближайшее модальное окно к карточке, на которой был клик
+      // ищем ближайшее модальное окно к карточке, на которой был клик
       const modal = link.closest(".card-body").querySelector(".modal");
-
       if (modal) {
         modal.classList.add("visible");
 
-        // Инициализируем карусель (если она есть) и запускаем автопрокрутку
+        // инициализируем карусель
         const carousel = modal.querySelector(".carousel");
         if (carousel) {
-          // Проверяем, есть ли уже инициализированная карусель, если нет - инициализируем
           const bsCarousel =
             bootstrap.Carousel.getInstance(carousel) ||
             new bootstrap.Carousel(carousel);
@@ -25,22 +23,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  /** закрытие модального окна*/
   const closeButtons = document.querySelectorAll(".close-btn");
 
   closeButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       const modal = btn.closest(".modal");
       if (modal) {
-        modal.classList.remove("visible"); // Закрытие модального окна
+        modal.classList.remove("visible");
       }
     });
   });
 
-  // Закрытие модального окна, если кликнули вне его
+  // закрытие модального окна при клике по фону
   const modals = document.querySelectorAll(".modal");
   modals.forEach((modal) => {
     modal.addEventListener("click", (e) => {
-      // Закрытие модального окна при клике по фону
       if (e.target === modal) {
         modal.classList.remove("visible");
       }
@@ -48,12 +46,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-/**Открытие карточек */
+/**открытие карточек */
 document.addEventListener("DOMContentLoaded", () => {
-  const row = document.querySelector(".ground"); // Контейнер для карточек
+  const row = document.querySelector(".ground");
 
-  // Запускаем анимацию для всего контейнера
+  // запускаем анимацию для всего контейнера
   setTimeout(() => {
-    row.classList.add("appear"); // Добавляем класс для появления карточек
-  }, 100); // Задержка появления контейнера
+    row.classList.add("appear");
+  }, 100);
 });
