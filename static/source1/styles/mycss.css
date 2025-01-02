@@ -116,6 +116,10 @@ a.read-more-link {
 a.read-more-link:hover {
   text-decoration: underline;
 }
+.custom-card {
+  min-width: 270px;
+  max-width: 300px;
+}
 
 /* Модальное окно */
 .modal {

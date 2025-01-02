@@ -69,7 +69,7 @@
 
                   {% tag_categories as categories %}          
                   {% for category in categories %}
-                  <li><a class="dropdown-item text-white" href="{% url 'catalog:index' %}">{{category.name}}</a></li>
+                  <li><a class="dropdown-item text-white" href="{% url 'catalog:index' category.slug %}">{{category.name}}</a></li>
                   {% endfor %}
                   
                 </ul>
@@ -117,26 +117,27 @@
             </ul>
              <!-- Значек корзины, вызывает модальное окно -->
             
-                <div>
+          <div class="d-flex align-items-center">
                    <button type="button" class="btn btn-secondary d-flex ms-2" id="modalButton"
                         aria-expanded="false" >
                         <img class="mx-1"  src="{% static 'source1/icons_site/basket.png' %}" alt="Catalog Icon" width="24" height="24">
 
                         <span id="goods-in-cart-count">0</span>
                     </button>
-                </div>
+                
                
-            <form class="d-flex ms-4" role="search">
-              <input
+              <form class="d-flex ms-4" role="search">
+                <input
                 class="form-control me-2"
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
-              />
-              <button class="btn btn-outline-success" type="submit">
-                Search
-              </button>
+                />
+                <button class="btn btn-outline-success" type="submit">
+                  Search
+                </button>
             </form>
+           </div> 
           </div>
         </div>
       </nav>

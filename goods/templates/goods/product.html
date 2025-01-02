@@ -14,9 +14,10 @@
 <div class="container-fluid mt-4 d-flex justify-content-center">
   <div class="card" style="max-width: 800px;">
     <div class="row g-0">
+
       <div class="col-md-4 d-flex align-items-center">
         <img
-          src="{% static 'source1/images/moto/moto01/moto1.jpg' %}"
+          src="{{ product.image.url }}"
           class="img-fluid rounded-start"
           alt="Мотоцикл"
           style="object-fit: contain; max-height: 250px;"
@@ -24,41 +25,30 @@
       </div>
       <div class="col-md-8">
         <div class="card-body">
-          <h5 class="card-title">Мотоцикл HARLEY-DAVIDSON Road King 2023</h5>
-          <p>Пробег: 258 км.</p>
+          <p class="product_id mt-3">id: {{ product.display_id }}</p>
+          <h5 class="card-title">{{ product.name }}</h5>
+          <p>Пробег: {{ product.mileage }} км.</p>
         <p class="card-text">
           <a href="#" class="text-secondary read-more-link"
-            >Harley Davidson выпустил Road King...</a
+            >{{ product.description }}</a
           >
                     </p>
-                    <h3><span style="color: red;">11.200 $ </span></h3>
-                    <div class="modal hidden">
+                    <h3><span>Цена: {{ product.sell_price }} $ </span></h3>
+                   <div class="modal hidden ">
                       <div class="modal-content">
                         <span class="close-btn">&times;</span> <br />
                         <p class="aboutmoto">
-                          Harley Davidson выпустил Road King в 1993 году. Этот
-                          «турист» пришел на смену Electra-Glide Sport и дожил
-                          до 2017 года без каких-либо радикальных изменений. В
-                          Америке байк очень распространен и практически
-                          доминирует над всеми остальными, а вот у нас на
-                          дорогах этот красавец, к сожалению, встречается очень
-                          редко.Типичный представитель класса touring — Road
-                          King привлекает не только своими техническими
-                          характеристиками, но и необычайно стильным внешним
-                          видом. Элементы экстерьера байка навевают ностальгию,
-                          а классическое кожаное сиденье, обилие хромированных
-                          деталей, улучшенная отделка кофров и спицованные
-                          колеса подчеркивают его неповторимость. Мотоцикл
-                          выглядит солидно и дорого.
+                        {{product.full_description}}
                         </p>
+                        
                         <div
-                          id="carouselExampleIndicators"
+                          id="{{ product.id }}"
                           class="carousel slide"
                         >
                           <div class="carousel-indicators">
                             <button
                               type="button"
-                              data-bs-target="#carouselExampleIndicators"
+                              data-bs-target="#{{ product.id }}"
                               data-bs-slide-to="0"
                               class="active"
                               aria-current="true"
@@ -66,44 +56,56 @@
                             ></button>
                             <button
                               type="button"
-                              data-bs-target="#carouselExampleIndicators"
+                              data-bs-target="#{{ product.id }}"
                               data-bs-slide-to="1"
                               aria-label="Slide 2"
                             ></button>
                             <button
                               type="button"
-                              data-bs-target="#carouselExampleIndicators"
+                              data-bs-target="#{{ product.id }}"
                               data-bs-slide-to="2"
                               aria-label="Slide 3"
                             ></button>
                           </div>
                           <div class="carousel-inner">
                             <div class="carousel-item active">
-                              <img
-                                src="{% static 'source1/images/moto/moto01/moto1.1' %}"
-                                class="d-block w-100"
-                                alt="..."
-                              />
+                               {% if product.image_slide1 %}
+                                    <img
+                                      src="{{ product.image_slide1.url }}"
+                                      class="d-block w-100"
+                                      alt="..."
+                                    />
+                               {% else %}
+                                    <img src="{% static 'source1/images/images not found.png' %}" />
+                               {% endif %}
                             </div>
                             <div class="carousel-item">
-                              <img
-                                src="{% static 'source1/images/moto/moto01/moto1.2' %}"
-                                class="d-block w-100"
-                                alt="..."
-                              />
+                                 {% if product.image_slide2 %}
+                                    <img
+                                      src="{{ product.image_slide2.url }}"
+                                      class="d-block w-100"
+                                      alt="..."
+                                    />
+                               {% else %}
+                                    <img src="{% static 'source1/images/images not found.png' %}" />
+                               {% endif %}
                             </div>
                             <div class="carousel-item">
-                              <img
-                                src="{% static 'source1/images/moto/moto01/moto1.3' %}"
-                                class="d-block w-100"
-                                alt="..."
-                              />
+                                {% if product.image_slide3 %}
+                                    <img
+                                      src="{{ product.image_slide3.url }}"
+                                      class="d-block w-100"
+                                      alt="..."
+                                    />
+                               {% else %}
+                                    <img src="{% static 'source1/images/images not found.png' %}" />
+                               {% endif %}
                             </div>
                           </div>
                           <button
                             class="carousel-control-prev"
                             type="button"
-                            data-bs-target="#carouselExampleIndicators"
+                            data-bs-target="#{{ product.id }}"
                             data-bs-slide="prev"
                           >
                             <span
@@ -115,7 +117,7 @@
                           <button
                             class="carousel-control-next"
                             type="button"
-                            data-bs-target="#carouselExampleIndicators"
+                            data-bs-target="#{{ product.id }}"
                             data-bs-slide="next"
                           >
                             <span
@@ -127,8 +129,7 @@
                         </div>
                       </div>
                     </div>
-
-                    <a href="#" class="btn btn-success">Купить</a>
+                    <a href="#" class="btn btn-success position-absolute bottom-0 end-0 m-3">Купить</a>
                   </div>
                 </div>
               </div>
