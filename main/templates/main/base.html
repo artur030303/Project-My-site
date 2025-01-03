@@ -126,15 +126,16 @@
                     </button>
                 
                
-              <form class="d-flex ms-4" role="search">
+              <form class="d-flex ms-4" role="search" action="{% url 'catalog:search' %}" method="get">
                 <input
                 class="form-control me-2"
                 type="search"
+                name='q'
                 placeholder="Search"
                 aria-label="Search"
                 />
                 <button class="btn btn-outline-success" type="submit">
-                  Search
+                  Поиск
                 </button>
             </form>
            </div> 
