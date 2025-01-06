@@ -65,6 +65,9 @@
             <div class="row">
 
 
+{% if not page_obj %}
+<h1 class='mt-4'  style="color: red;">По запросу "{{request.GET.q}}" ничего не найдено</h1>
+{% endif %}              
 {% for product in page_obj %}            
            
               <div class="col-lg-4 col-md-6 mt-4 d-flex align-items-stretch">
@@ -78,14 +81,28 @@
                     
                   <div class="card-body">
                     <a href=" {% url 'catalog:product' product.slug %}" style="color:black;">
-                      <h5 class="card-title">
-                      {{product.name}}
-                    </h5></a>
+                       <h5 class="card-title">
+                        {% autoescape off %}
+                        {% if product.headline %}
+                        {{product.headline}}                       
+                        {% else %}
+                        {{product.name}}
+                        {% endif %}
+                        {% endautoescape %}
+                      </h5>
+                   </a>
                     <p> Пробег: {{product.mileage}} км</p>
                     <p class="card-text text-truncate" style="max-height: 60px;">
-                      <a href="#" class="text-secondary read-more-link"
-                        >{{product.description}}</a
-                      > 
+                      <a href="#" class="text-secondary read-more-link">
+                        {% autoescape off %}
+                        {% if product.bodyline %}
+                        {{product.bodyline}}                       
+                        {% else %}
+                        {{product.description}}
+                        {% endif %}
+                        {% endautoescape %}                 
+                      </a>
+                      
                     </p>
                     
                     <p class="product_id text-secondary">id: {{ product.display_id }}</p>
@@ -213,7 +230,8 @@
 
 
  <!-- Пагинация -->
-       <nav aria-label="Page navigation example ">
+ {% if  page_obj %}
+  <nav aria-label="Page navigation example ">
           <ul class="pagination justify-content-center my-4 mt-5">
 
                           {% if page_obj.has_previous %}
@@ -266,6 +284,9 @@
                         {% endif %}
                     </ul>
       </nav>
+ 
+ {% endif %}
+      
             </div>
           </div>
           <div class="col-lg-1"></div>
