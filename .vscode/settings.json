@@ -1,7 +1,6 @@
 {
   "git.autoRepositoryDetection": "subFolders",
   "breadcrumbs.enabled": true,
-
   "debug.autoExpandLazyVariables": "on",
   "debug.inlineValues": "on",
 
@@ -34,7 +33,7 @@
     "**/*.html": "html",
     "**/templates/*/*.html": "django-html",
     "**/templates/*/*/*.html": "django-html",
-    "**/templates/*": "django-txt",
+    "**/templates/*": "django-html",
     "**/requirements{/**,*}.{txt,in}": "pip-requirements"
   },
   "django.snippets.exclude": ["cms", "wagtail"],
@@ -47,5 +46,7 @@
       "comments": true,
       "strings": true
     }
-  }
+  },
+
+  "python.pythonPath": "/Users/arturryzkevic/Desktop/проект/dev_env/venv/bin/python"
 }
