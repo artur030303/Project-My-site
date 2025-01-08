@@ -48,5 +48,8 @@
     }
   },
 
-  "python.pythonPath": "/Users/arturryzkevic/Desktop/проект/dev_env/venv/bin/python"
+  "python.venvPath": "/Users/arturryzkevic/Desktop/проект/dev_env",
+  "python.defaultInterpreterPath": "/Users/arturryzkevic/Desktop/проект/dev_env/venv/bin/python",
+  "terminal.integrated.activateEnvironment": true,
+  "python.terminal.activateEnvironment": true
 }
