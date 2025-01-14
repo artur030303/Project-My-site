@@ -2,17 +2,13 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Python Debugger: Django",
+      "name": "Django Debug",
       "type": "debugpy",
       "request": "launch",
       "program": "${workspaceFolder}/manage.py",
-      "args": ["runserver", "--noreload"],
+      "args": ["runserver", "8000"], // Замените порт, если нужно
       "django": true,
-      "autoStartBrowser": false,
-      "console": "integratedTerminal",
-      "env": {
-        "DJANGO_SETTINGS_MODULE": "my_site.settings"
-      }
+      "justMyCode": true
     }
   ]
 }
