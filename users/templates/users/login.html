@@ -10,11 +10,16 @@
             <h2 class="text-center mb-4">Авторизация</h2>
 
             {% comment %} Форма авторизации {% endcomment %}
-             <form action="{% url 'user:login' %}" method='post'>
-            {% csrf_token %}
+             <form action="{% url 'user:login' %}" method="post">
+                {% csrf_token %}
+                {% if request.GET.next %}
+                    <input type="hidden" name="next" value="{{ request.GET.next }}">
+                {% endif %}
 
-            <div class="mb-3">
-                    <label for="id_username" class="form-label">{{ form.username.label}}</label>
+        
+
+                <div class="mb-3">
+                    <label for="id_username" class="form-label">{{ form.username.label }}</label>
                     <input type="text" class="form-control" 
                     value='{% if form.username.value %}{{ form.username.value}}{% endif %}'
                     name='username' id="id_username" 
