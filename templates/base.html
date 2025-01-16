@@ -17,6 +17,10 @@
     <link rel="stylesheet" href="{% static 'source1/styles/mycss.css' %}" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     
+  
+
+  
+
 
    <title>{% block title %}Default Title{% endblock %}</title>
   </head>
@@ -98,7 +102,8 @@
                          </li>
                      {% if not user.is_authenticated %}
                          <li class="nav-item">
-                            <a class="nav-link  " href="{% url 'user:login' %}">Войти</a>
+                            <a class="nav-link" href="{% url 'user:login' %}?next={{ request.path }}">Войти</a>
+
                          </li>
                      {% else %}
                          <li class="nav-item dropdown ">
@@ -172,6 +177,11 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
+    <script src="{% static 'source1/js/main.js' %}"></script>
+
+  
+
+  
     {% block script %}
     {% endblock script %}
   </body>
