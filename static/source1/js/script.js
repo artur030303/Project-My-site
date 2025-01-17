@@ -55,3 +55,21 @@ document.addEventListener("DOMContentLoaded", () => {
     row.classList.add("appear");
   }, 100);
 });
+
+//**открытие корзины (значок) */
+document.addEventListener("DOMContentLoaded", function () {
+  const modalButton = document.getElementById("modalButton");
+  const includedBasket = document.getElementById("includedBasket");
+
+  // Показать корзину при нажатии на кнопку
+  modalButton.addEventListener("click", function () {
+    includedBasket.style.display = "flex"; // Показываем корзину
+  });
+
+  // Закрытие корзины при клике на фон (внешнюю часть модального окна)
+  includedBasket.addEventListener("click", function (e) {
+    if (e.target === includedBasket) {
+      includedBasket.style.display = "none"; // Скрываем корзину
+    }
+  });
+});

@@ -97,9 +97,17 @@
                 </ul>
               </li>
               
+
                <li class="nav-item">
-                            <a class="nav-link  " href="{% url 'basket'%}">Корзина</a>
-                         </li>
+                  <a class="nav-link  " href="{% url 'user:users_basket'%}">Корзина</a>
+               </li>
+               
+
+
+
+
+
+
                      {% if not user.is_authenticated %}
                          <li class="nav-item">
                             <a class="nav-link" href="{% url 'user:login' %}?next={{ request.path }}">Войти</a>
@@ -128,17 +136,24 @@
                        
                     {% endif %}        
             </ul>
-             <!-- Значек корзины, вызывает модальное окно -->
+             
             
           <div class="d-flex align-items-center">
-                   <button type="button" class="btn btn-secondary d-flex ms-2" id="modalButton"
-                        aria-expanded="false" >
-                        <img class="mx-1"  src="{% static 'source1/icons_site/basket.png' %}" alt="Catalog Icon" width="24" height="24">
-
-                        <span id="goods-in-cart-count">0</span>
-                    </button>
+            <div>
+                <button type="button" class="btn btn-secondary d-flex ms-2" id="modalButton" aria-expanded="false">
+                    <img class="mx-1" src="{% static 'source1/icons_site/basket.png' %}" alt="Catalog Icon" width="24" height="24">
+                    <span id="goods-in-cart-count">0</span>
+                </button>
+              </div>
+              <div id="includedBasket" class="hidden-basket">
+                 <div class="basket-content">
+                  {% include "baskets/includes/included_basket.html" %}
+                 </div>
+              </div>  
                 
-               
+    
+                
+              
               <form class="d-flex ms-4" role="search" action="{% url 'catalog:search' %}" method="get">
                 <input
                 class="form-control me-2"
@@ -151,6 +166,7 @@
                   Поиск
                 </button>
             </form>
+            
            </div> 
           </div>
         </div>
@@ -158,12 +174,13 @@
     </header>
 
 
+
 {% include "includes/notifications.html" %}
 {% block content %}
 
 {% endblock content %}
        
-    
+ 
  
 
 
@@ -178,6 +195,7 @@
       crossorigin="anonymous"
     ></script>
     <script src="{% static 'source1/js/main.js' %}"></script>
+    <script src="{% static 'source1/js/script.js' %}"></script>
 
   
 
