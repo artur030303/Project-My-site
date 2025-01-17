@@ -60,6 +60,10 @@ def profile(request):
     return render(request, "users/profile.html", context)
 
 
+def users_basket(request):
+    return render(request, "users/users_basket.html")
+
+
 @login_required
 def logout(request):
     messages.success(request, f"{request.user.username}, Вы вышли из аккаунта")
