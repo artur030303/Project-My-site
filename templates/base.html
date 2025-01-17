@@ -142,7 +142,7 @@
             <div>
                 <button type="button" class="btn btn-secondary d-flex ms-2" id="modalButton" aria-expanded="false">
                     <img class="mx-1" src="{% static 'source1/icons_site/basket.png' %}" alt="Catalog Icon" width="24" height="24">
-                    <span id="goods-in-cart-count">0</span>
+                    <span id="goods-in-cart-count">{{ baskets.total_quantity }}</span>
                 </button>
               </div>
               <div id="includedBasket" class="hidden-basket">
