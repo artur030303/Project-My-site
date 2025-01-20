@@ -21,9 +21,20 @@ def basket_add(request, product_slug):
     return redirect(request.META["HTTP_REFERER"])
 
 
-def basket_change(request, product_slug):
-    pass
+def basket_change(request, basket_id):
+    if request.method == "POST":
+        basket = Basket.objects.get(id=basket_id, user=request.user)
+        action = request.POST.get("action")
+
+        if action == "increment":
+            basket.quantity += 1
+        elif action == "decrement" and basket.quantity > 1:
+            basket.quantity -= 1
+        basket.save()
+    return redirect(request.META.get("HTTP_REFERER", "/"))
 
 
-def basket_remove(request, product_slug):
-    pass
+def basket_remove(request, basket_id):
+    basket = Basket.objects.get(id=basket_id)
+    basket.delete()
+    return redirect(request.META["HTTP_REFERER"])
