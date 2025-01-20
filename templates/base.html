@@ -57,8 +57,7 @@
                   href="{% url 'main:index' %}"
                   >Home</a
                 >
-              </li>
-             
+              </li>             
              <li class="nav-item dropdown">
                 <a
                   class="nav-link dropdown-toggle"
@@ -70,15 +69,12 @@
                   Каталог
                 </a>
                 <ul class="dropdown-menu">
-
                   {% tag_categories as categories %}          
                   {% for category in categories %}
                   <li><a class="dropdown-item text-white" href="{% url 'catalog:index' category.slug %}">{{category.name}}</a></li>
-                  {% endfor %}
-                  
+                  {% endfor %}             
                 </ul>
-              </li>
-              
+              </li>        
               <li class="nav-item dropdown">
                 <a
                   class="nav-link dropdown-toggle"
@@ -89,38 +85,28 @@
                 >
                   Информация
                 </a>
-                <ul class="dropdown-menu">
-                  
+                <ul class="dropdown-menu">         
                   <li>
                     <a class="dropdown-item text-white" href="{% url 'main:about_us' %}">О нас</a>
                   </li>
                 </ul>
               </li>
-              
-
                <li class="nav-item">
                   <a class="nav-link  " href="{% url 'user:users_basket'%}">Корзина</a>
                </li>
                
-
-
-
-
-
-
-                     {% if not user.is_authenticated %}
+                    {% if not user.is_authenticated %}
                          <li class="nav-item">
                             <a class="nav-link" href="{% url 'user:login' %}?next={{ request.path }}">Войти</a>
 
                          </li>
-                     {% else %}
+                    {% else %}
                          <li class="nav-item dropdown ">
                              <a class="nav-link dropdown-toggle " href="#" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 Мой профиль
                              </a>
                              <ul class="dropdown-menu">
-                                <li><a class="dropdown-item  text-white" href="carts/cart.html">Корзина</a></li>
                                 <li><a class="dropdown-item  text-white" href="{% url 'user:profile' %}">Личный кабинет</a>
                                 </li>
                                 {% if user.is_admin or user.is_staff %}
@@ -135,25 +121,7 @@
                          </li>                            
                        
                     {% endif %}        
-            </ul>
-             
-            
-          <div class="d-flex align-items-center">
-            <div>
-                <button type="button" class="btn btn-secondary d-flex ms-2" id="modalButton" aria-expanded="false">
-                    <img class="mx-1" src="{% static 'source1/icons_site/basket.png' %}" alt="Catalog Icon" width="24" height="24">
-                    <span id="goods-in-cart-count">{{ baskets.total_quantity }}</span>
-                </button>
-              </div>
-              <div id="includedBasket" class="hidden-basket">
-                 <div class="basket-content">
-                  {% include "baskets/includes/included_basket.html" %}
-                 </div>
-              </div>  
-                
-    
-                
-              
+            </ul>        
               <form class="d-flex ms-4" role="search" action="{% url 'catalog:search' %}" method="get">
                 <input
                 class="form-control me-2"
