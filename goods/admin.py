@@ -4,9 +4,6 @@ from goods.models import Categories, Products
 
 # Register your models here.
 
-# admin.site.register(Categories)
-# admin.site.register(Products)
-
 
 @admin.register(Categories)
 class CategoriesAdmin(admin.ModelAdmin):
@@ -16,3 +13,7 @@ class CategoriesAdmin(admin.ModelAdmin):
 @admin.register(Products)
 class ProductsAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
+    list_display = ["name", "quantity", "price", "discount"]
+    list_editable = ["discount"]
+    search_fields = ["name"]
+    list_filter = ["discount", "quantity", "category"]
