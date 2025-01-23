@@ -6,24 +6,28 @@
 <div class="card mb-3 text-bg-light shadow-lg">
     {% for basket in baskets %}
         <div class="card-header">
-            <h5 class="card-title">{{ basket.product.name }}</h5>
+            <h5 class="card-title">
+                <a href="{% url 'catalog:product' product_slug=basket.product.slug %}" style="text-decoration: none; color: black;">
+                    {{ basket.product.name }}
+                </a>
+            </h5>
         </div>
+    
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
                 <div class="row align-items-center text-center">
-                    <!-- Колонка управления количеством -->
-                       <div class="col-3">
+                    <div class="col-3">
                         <form action="{% url 'basket:basket_change' basket.id %}" method="post" style="display: inline;">
-                             {% csrf_token %}
-                             <input type="hidden" name="action" value="decrement">
-                             <button type="submit" class="btn btn-dark btn-sm">-</button>
-                         </form>
-                           <input type="text" class="form-control text-center number px-1 d-inline-block"
-                             value="{{ basket.quantity }}" readonly style="width: 40px;">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="decrement">
+                            <button type="submit" style="border: 4px solid green;" class="btn btn-dark btn-sm">-</button>
+                        </form>
+                        <input type="text" class="form-control text-center number px-1 d-inline-block"
+                               value="{{ basket.quantity }}" readonly style="width: 40px;">
                         <form action="{% url 'basket:basket_change' basket.id %}" method="post" style="display: inline;">
-                             {% csrf_token %}
-                             <input type="hidden" name="action" value="increment">
-                             <button type="submit" class="btn btn-dark btn-sm">+</button>
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="increment">
+                            <button type="submit" style="border: 4px solid green;" class="btn btn-dark btn-sm">+</button>
                         </form>
                     </div>
                     <div class="col-4">
@@ -34,8 +38,8 @@
                     </div>
                     <div class="col-2">
                         <a href="{% url 'basket:basket_remove' basket.id %}" class="remove-from-cart" data-cart-id="">
-                            <img class="mx-1" src="{% static 'source1/icons_site/icon_delete.svg' %}"
-                                alt="Delete Icon" width="25" height="25">
+                            <img style="border: 2px solid yellow; border-radius: 4px;" class="mx-1" src="{% static 'source1/icons_site/icon_delete.svg' %}"
+                                 alt="Delete Icon" width="25" height="25">
                         </a>
                     </div>
                 </div>
@@ -50,8 +54,10 @@
             <h4 class="float-left"><strong>{{ baskets.total_price }} $</strong></h4>
         </div>
         {% if baskets %}
-            <a class="btn btn-dark" href="{% url 'orders:create_order' %}">
-              Оформить заказ
-            </a>
+            {% if request.path != '/orders/create-order/' %}
+               <a href="{% url 'orders:create_order' %}" class="btn btn-dark" style="border: 4px solid green;">
+                   Оформить заказ
+               </a>
+            {% endif %}
         {% endif %}
 </div>

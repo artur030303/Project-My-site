@@ -6,7 +6,7 @@
     <div class="row">
          <div class="container mt-5">
              <div class="row justify-content-center">
-                 <div class="col-md-6 bg-white p-4 mb-4 mx-2 rounded custom-shadow">
+                 <div style="background-color: lightgray;" class="col-md-6  p-4 mb-4 mx-2 rounded custom-shadow">
                      <h3 class="text-center mb-4">Корзина</h3>
                      <div class="container" id="cart-items-container">
                         
@@ -14,7 +14,7 @@
                          
                      </div>
                      {% if baskets %}
-                        <a class="btn btn-dark" href="../orders/create_order.html">
+                        <a  class="btn btn-dark" href="{% url 'orders:create_order' %}" style="border: 4px solid green;">
                             Оформить заказ
                         </a>
                      {% endif %}    

@@ -14,6 +14,5 @@ class CategoriesAdmin(admin.ModelAdmin):
 class ProductsAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = ["name", "quantity", "price", "discount"]
-    list_editable = ["discount"]
+    list_editable = ["discount", "quantity"]
     search_fields = ["name"]
-    list_filter = ["discount", "quantity", "category"]

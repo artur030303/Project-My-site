@@ -22,8 +22,3 @@ class BasketAdmin(admin.ModelAdmin):
         "quantity",
         "created_timestamp",
     ]
-    list_filter = [
-        "created_timestamp",
-        "user",
-        "product__name",
-    ]
