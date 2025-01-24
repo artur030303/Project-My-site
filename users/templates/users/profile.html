@@ -118,21 +118,26 @@
                                                                         <th>Товар</th>
                                                                         <th>Количество</th>
                                                                         <th>Цена</th>
-                                                                        <th>Общая стоимость</th>
+                                                                        
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                     {% for item in order.orderitem_set.all %}
                                                                     <tr>
-                                                                        {% comment %} <td><a class="text-white" href="{% url 'goods:product' item.product.slug %}">{{ item.product.name }}</a></td> {% endcomment %}
+                                                                        <td>
+                                                                              {{ item.product.name }}
+                                                                            </td>
                                                                         <td>{{ item.quantity }}</td>
                                                                         <td>{{ item.price}} $</td>
-                                                                        <td>{{ item.products_price }}$</td>
+                                                                        
                                                                         
                                                                     </tr>
                                                                     {% endfor %}
                                                                 </tbody>
                                                             </table>
+                                                             <div class="text-end mt-3">
+                                                                 <strong>Общая стоимость заказа: {{ order.get_total_cost }} $</strong>
+                                                             </div>
                             
                                                         </div>
                                                     </div>

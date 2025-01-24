@@ -45,6 +45,9 @@ class Order(models.Model):
     def __str__(self):
         return f"Заказ № {self.pk} | Покупатель {self.user.first_name} {self.user.last_name}"
 
+    def get_total_cost(self):
+        return sum(item.get_cost() for item in self.orderitem_set.all())
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(to=Order, on_delete=models.CASCADE, verbose_name="Заказ")
@@ -62,6 +65,9 @@ class OrderItem(models.Model):
     created_timestamp = models.DateTimeField(
         auto_now_add=True, verbose_name="Дата продажи"
     )
+
+    def get_cost(self):
+        return self.price * self.quantity
 
     class Meta:
         db_table = "order_item"
