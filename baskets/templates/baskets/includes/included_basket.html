@@ -37,10 +37,13 @@
                         <strong>{{ basket.products_price }} $</strong>
                     </div>
                     <div class="col-2">
-                        <a href="{% url 'basket:basket_remove' basket.id %}" class="remove-from-cart" data-cart-id="">
-                            <img style="border: 2px solid yellow; border-radius: 4px;" class="mx-1" src="{% static 'source1/icons_site/icon_delete.svg' %}"
-                                 alt="Delete Icon" width="25" height="25">
-                        </a>
+                        <form action="{% url 'basket:basket_remove' basket.id %}" method="post" class="remove-from-cart d-inline">
+                            {% csrf_token %}
+                            <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer;">
+                                <img style="border: 2px solid yellow; border-radius: 4px;" class="mx-1" src="{% static 'source1/icons_site/icon_delete.svg' %}"
+                                     alt="Delete Icon" width="25" height="25">
+                            </button>
+                        </form>
                     </div>
                 </div>
             </li>

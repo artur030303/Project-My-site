@@ -15,7 +15,7 @@
   <section class="ground">
       <div class="container-fluid mt-4">
         <div class="row">
-            <!-- Форма фильтров -->
+            {% comment %} ФИЛЬТРЫ {% endcomment %}
                         <div class="dropdown mb-2">
                             <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
@@ -35,10 +35,7 @@
                                 <p class="text-white mx-3 mt-3">Сортировать:</p>
                                 <div class="form-check text-white mx-3">
                                     <input class="form-check-input" type="radio" name="order_by" id="flexRadioDefault1" value="default" 
-                                    {% if not request.GET.order_by or request.GET.order_by == 'default' %}checked{% endif %} >
-                                    
-                                    
-                                    
+                                    {% if not request.GET.order_by or request.GET.order_by == 'default' %}checked{% endif %} >                
                                     <label class="form-check-label" for="flexRadioDefault1">
                                         По умолчанию
                                     </label>
@@ -64,12 +61,11 @@
           <div class="col-lg-8">
             <div class="row">
 
-
 {% if not page_obj %}
 <h1 class='mt-4'  style="color: red;">По запросу "{{request.GET.q}}" ничего не найдено</h1>
-{% endif %}              
-{% for product in page_obj %}            
-           
+{% endif %}
+
+{% for product in page_obj %}             
               <div class="col-lg-4 col-md-6 mt-4 d-flex align-items-stretch">
                 <div class="card custom-card ">
                   {% if product.image %}
@@ -101,13 +97,10 @@
                         {{product.description}}
                         {% endif %}
                         {% endautoescape %}                 
-                      </a>
-                      
-                    </p>
-                    
+                      </a>                  
+                    </p>               
                     <p class="product_id text-secondary">id: {{ product.display_id }}</p>
                     <div class="d-flex justify-content-between">
-
 
                         {% if product.discount %}
                         <h3><s>{{ product.price }} $</s> </h3>
@@ -117,18 +110,14 @@
                         </span> 
                         {% else %}
                         <h2><strong>{{ product.price }} $</strong></h2> 
-                        {% endif %}
-                                        
+                        {% endif %}                                       
                     </div>
-
-
                     <div class="modal hidden ">
                       <div class="modal-content">
                         <span class="close-btn">&times;</span> <br />
                         <p class="aboutmoto">
                         {{product.full_description}}
-                        </p>
-                        
+                        </p>                       
                         <div
                           id="{{ product.id }}"
                           class="carousel slide"
@@ -218,26 +207,22 @@
                       </div>
                     </div>
                     {% if user.is_authenticated %}
-                      <a href="{% url 'basket:basket_add' product.slug %}" class="btn add-to-cart">
-                        <img class="mx-1 mt-5" src="{% static 'source1/icons_site/basket.png' %}" alt="Catalog Icon"
-                          width="32" height="32">
-                      </a>
-                    
-                    {% endif %}
-
-                    
+                      <form action="{% url 'basket:basket_add' product.slug %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn add-to-cart">
+                          <img class="mx-1 mt-5" src="{% static 'source1/icons_site/basket.png' %}" alt="Catalog Icon" width="32" height="32">
+                        </button>
+                      </form>
+                    {% endif %}  
                   </div>
-                </div>
-              
+                </div>      
               </div>
 {% endfor %}  
 
-
- <!-- Пагинация -->
+    {% comment %} ПАГИНАЦИЯ {% endcomment %}
  {% if  page_obj %}
   <nav aria-label="Page navigation example ">
           <ul class="pagination justify-content-center my-4 mt-5">
-
                           {% if page_obj.has_previous %}
                            <li class="page-item">
                               <a class="page-link" href="?{% change_params page=1 %}">Первая</a>
@@ -253,9 +238,6 @@
                               <a class="page-link" href="#">Назад</a>
                            </li>
                           {% endif %}
-                          
-                          <!-- Номер страниц -->
-
                            {% for num in page_obj.paginator.page_range %}
                             {% if num >= page_obj.number|add:-2 and num <= page_obj.number|add:2 %}
                                 {% if page_obj.number == num %}
@@ -268,9 +250,7 @@
                                     </li>
                                 {% endif %}
                             {% endif %}
-                        {% endfor %}
-                                  
-                      
+                        {% endfor %}        
                         {% if page_obj.has_next %}
                             <li class="page-item">
                                 <a class="page-link" href="?{% change_params page=page_obj.next_page_number %}">Следующая</a>
@@ -288,9 +268,7 @@
                         {% endif %}
                     </ul>
       </nav>
- 
- {% endif %}
-      
+ {% endif %}   
             </div>
           </div>
           <div class="col-lg-1"></div>

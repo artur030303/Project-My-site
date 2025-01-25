@@ -3,84 +3,122 @@ from django.contrib import auth, messages
 from django.db.models import Prefetch
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 
-
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import CreateView, UpdateView, TemplateView
 from orders.models import Order, OrderItem
 
+from django.contrib.auth import login
+from django.contrib.auth import logout
 from .forms import ProfileForm, UserLoginForm, UserRegistrationForm
+
 
 # Create your views here.
 
 
-def login(request):
-    if request.method == "POST":
-        form = UserLoginForm(data=request.POST)
-        if form.is_valid():
-            username = request.POST["username"]
-            password = request.POST["password"]
-            user = auth.authenticate(username=username, password=password)
-            if user:
-                auth.login(request, user)
-                messages.success(request, f"{username}, Вы вошли в аккаунт")
-                if request.POST.get("next", None):
-                    return HttpResponseRedirect(request.POST.get("next"))
+class UserLoginView(LoginView):
+    template_name = "users/login.html"
+    form_class = UserLoginForm
+    success_url = reverse_lazy("main:index")
 
-                return HttpResponseRedirect(reverse("main:index"))
-    else:
-        form = UserLoginForm()
-    context = {"title": "Home - Авторизация", "form": form}
-    return render(request, "users/login.html", context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Home - Авторизация"
+        return context
 
+    def form_valid(self, form):
+        username = self.request.POST["username"]
+        password = self.request.POST["password"]
+        user = auth.authenticate(username=username, password=password)
 
-def registration(request):
-    if request.method == "POST":
-        form = UserRegistrationForm(data=request.POST)
-        if form.is_valid():
-            form.save()
-            user = form.instance
-            auth.login(request, user)
-            messages.success(request, f"{user.username}, Вы успешно зарегистрировались")
-            return HttpResponseRedirect(reverse("main:index"))
-    else:
-        form = UserRegistrationForm()
-
-    context = {"title": "Home - Регистрация", "form": form}
-    return render(request, "users/registration.html", context)
-
-
-@login_required
-def profile(request):
-    if request.method == "POST":
-        form = ProfileForm(request.POST, request.FILES, instance=request.user)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Профайл обновлен")
-            return HttpResponseRedirect(reverse("user:profile"))
-    else:
-        form = ProfileForm(instance=request.user)
-
-    orders = (
-        Order.objects.filter(user=request.user)
-        .prefetch_related(
-            Prefetch(
-                "orderitem_set",
-                queryset=OrderItem.objects.select_related("product"),
+        if user:
+            login(self.request, user)
+            messages.success(
+                self.request, f"Полльзователь {username}, Вы вошли в аккаунт"
             )
+
+            next_url = self.request.POST.get("next", None)
+            if next_url:
+                return HttpResponseRedirect(next_url)
+
+            return HttpResponseRedirect(self.get_success_url())
+        else:
+            form.add_error(None, "Неверное имя пользователя или пароль")
+            return self.form_invalid(form)
+
+
+class UserRegistrationView(CreateView):
+    template_name = "users/registration.html"
+    form_class = UserRegistrationForm
+    success_url = reverse_lazy("user:profile")
+
+    def form_valid(self, form):
+        user = form.save()
+        self.object = user
+        login(self.request, user)
+        messages.success(
+            self.request, f"Пользователь {user.username}, Вы успешно зарегистрировались"
         )
-        .order_by("-id")
-    )
+        return HttpResponseRedirect(self.get_success_url())
 
-    context = {"title": "Home - Кабинет", "form": form, "orders": orders}
-    return render(request, "users/profile.html", context)
-
-
-def users_basket(request):
-    return render(request, "users/users_basket.html")
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Home - Регистрация"
+        return context
 
 
-@login_required
-def logout(request):
-    messages.success(request, f"{request.user.username}, Вы вышли из аккаунта")
-    auth.logout(request)
-    return redirect(reverse("main:index"))
+class UserProfileView(LoginRequiredMixin, UpdateView):
+    template_name = "users/profile.html"
+    form_class = ProfileForm
+    success_url = reverse_lazy("user:profile")
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def form_valid(self, form):
+        messages.success(self.request, "Профайл обновлен")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Профайл не обновлен")
+        return super().form_invalid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Home - Личный кабинет"
+        context["orders"] = (
+            Order.objects.filter(user=self.request.user)
+            .prefetch_related(
+                Prefetch(
+                    "orderitem_set",
+                    queryset=OrderItem.objects.select_related("product"),
+                )
+            )
+            .order_by("-id")
+        )
+
+        return context
+
+
+class UserBasketView(TemplateView):
+    template_name = "users/users_basket.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Home - Корзина"
+        return context
+
+
+class UserLogoutView(LogoutView):
+    next_page = reverse_lazy("main:index")
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.method == "GET":
+            messages.success(
+                request, f"Пользователь {request.user.username}, Вы вышли из аккаунта"
+            )
+            logout(request)
+            return redirect(reverse_lazy("main:index"))
+        return super().dispatch(request, *args, **kwargs)
