@@ -2,7 +2,7 @@ from django.urls import path
 
 from users import views
 
-app_name = "users"
+app_name = "users" # имя приложения для маршрутизации
 
 urlpatterns = [
     path("login/", views.UserLoginView.as_view(), name="login"),

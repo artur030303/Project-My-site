@@ -7,7 +7,6 @@
      <div class="container">
          <h3 class="text-center mb-4">Выбранные товары</h3>
          <div class="container" id="cart-items-container">
-
              
              {% user_baskets request as baskets %}
             {% include "baskets/includes/included_basket.html" %}
@@ -22,7 +21,7 @@
     </ul>
 {% endif %}
       
-     <!-- Детали заказа -->
+     {# Детали заказа #}
      <div class="container">
          <h3 class="text-center">Детали заказа</h3>
          <div class="card mb-3">
@@ -58,9 +57,7 @@
                              {% if form.phone_number.errors %}
                                     <div class="alert alert-danger alert-dismissible fade show">{{form.phone_number.errors}}</div>
                              {% endif %}
-
-                         </div>
-                    
+                         </div>                  
                      <button  type="submit" class="btn btn-dark" style="border: 4px solid green;">Оформить заказ</button>
                  </form>
              </div>

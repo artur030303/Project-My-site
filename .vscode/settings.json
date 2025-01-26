@@ -51,5 +51,10 @@
   "python.venvPath": "/Users/arturryzkevic/Desktop/проект/dev_env",
   "python.defaultInterpreterPath": "/Users/arturryzkevic/Desktop/проект/dev_env/venv/bin/python",
   "terminal.integrated.activateEnvironment": true,
-  "python.terminal.activateEnvironment": true
+  "python.terminal.activateEnvironment": true,
+
+  "editor.wordWrap": "off",
+
+  // Добавлен ограничитель длины строки (например, 120 символов)
+  "editor.rulers": [220]
 }

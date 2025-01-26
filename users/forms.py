@@ -8,18 +8,14 @@ from django.contrib.auth.forms import (
 
 from users.models import User
 
+# класс формы авторизации
+class UserLoginForm(AuthenticationForm): # AuthenticationForm - класс формы авторизации по умолчанию Django
+    pass
 
-class UserLoginForm(AuthenticationForm):
+    
 
-    class Meta:
-        model = User
-        fields = ["username", "password"]
-
-    username = forms.CharField()
-    password = forms.CharField()
-
-
-class UserRegistrationForm(UserCreationForm):
+# класс формы регистрации
+class UserRegistrationForm(UserCreationForm):# UserCreationForm - класс формы регистрации по умолчанию Django
 
     class Meta:
         model = User
@@ -32,12 +28,7 @@ class UserRegistrationForm(UserCreationForm):
             "password2",
         )
 
-    first_name = forms.CharField()
-    last_name = forms.CharField()
-    username = forms.CharField()
-    email = forms.CharField()
-    password1 = forms.CharField()
-    password2 = forms.CharField()
+   
 
 
 class ProfileForm(UserChangeForm):
@@ -51,8 +42,4 @@ class ProfileForm(UserChangeForm):
             "image",
         )
 
-    image = forms.ImageField(required=False)
-    first_name = forms.CharField()
-    last_name = forms.CharField()
-    username = forms.CharField()
-    email = forms.CharField()
+   
