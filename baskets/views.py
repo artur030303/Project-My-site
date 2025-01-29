@@ -33,8 +33,13 @@ class BasketChangeView(View):
         action = request.POST.get("action")# извлекается значение action из POST запроса(пользователь нажал кнопку + или -)
         if action == "increment":
             basket.quantity += 1
-        elif action == "decrement" and basket.quantity > 1:
-            basket.quantity -= 1
+            basket.save()
+        elif action == "decrement": 
+            if basket.quantity > 1:
+               basket.quantity -= 1
+               basket.save()
+            else:
+               messages.success(request, "Остался только один товар! Если хотите удалить товар полностью нажмите на значок корзины")    
         else:
             return HttpResponseForbidden("Invalid action")# если действие недопустимое, возвращается ошибка
         basket.save()# сохраняется изменения

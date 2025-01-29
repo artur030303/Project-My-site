@@ -135,7 +135,9 @@
                                  Назад
                             </button>
                         {% else %}
-                            <a href="{% url 'basket:basket_add' product.slug %}" class="btn btn-success position-absolute bottom-0 end-0 m-3">Купить</a>
+                            <form action="{% url 'basket:basket_add' product.slug %}" method="post">
+                               {% csrf_token %}
+                              <button type="submit" class="btn btn-success position-absolute bottom-0 end-0 m-3">Купить </button></form>
                         {% endif %}
                     {% endif %}
 {% endblock content %}
